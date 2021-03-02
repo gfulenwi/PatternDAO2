@@ -1,5 +1,6 @@
 <?php
-  
+    require 'model/ContactDAO.php';  
+    
 ?>
 <!DOCTYPE html>
 <html lang="en">
