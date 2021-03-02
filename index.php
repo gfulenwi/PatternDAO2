@@ -1,6 +1,22 @@
 <?php
     require 'model/ContactDAO.php';
 
+    if(isset($_GET['submit'])){
+        $submit = $_GET['submit'];
+        $contactid = $_GET['contactID'];
+        if($submit=="ADD"){
+            header("Location: addContact.php");
+            exit;
+        }
+        if($submit=="DELETE"){
+            $header="Location: delContact.php?contactID=".$contactid;
+            header($header);
+            exit;
+        }
+
+    }
+
+
     $contactDAO = new ContactDAO();
     $contacts=$contactDAO->getContacts();
 ?>
@@ -23,18 +39,22 @@
     </nav>
     <div class="container">
         <div class="col">
+            <form action="index.php" method="GET">
+            <button class="btn btn-primary" type="submit" name="submit" value="ADD">Add Contact</button>
+            <button class="btn btn-primary" type="submit" name="submit" value="DELETE">Delete Contact</button>
             <table class="table table-bordered table-striped">
                 <thead><tr><th>Contact ID</th><th>User Name</th><th>Email</th></tr></thead>
                 <tbody>
                     <?php
                         for($index=0;$index<count($contacts);$index++){
-                            echo "<tr><td>".$contacts[$index]->getContactID()."</td>";
+                            echo "<tr><td><input type=\"radio\" name=\"contactID\" value=\"".$contacts[$index]->getContactID()."\"></td>";
                             echo "<td>".$contacts[$index]->getUsername()."</td>";
                             echo "<td>".$contacts[$index]->getEmail()."</td></tr>";
                         }
                     ?>
                 </tbody>        
             </table>  
+            </form>
         </div>
     </div>
 
