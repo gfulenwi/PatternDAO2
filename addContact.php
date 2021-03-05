@@ -1,6 +1,19 @@
 <?php
     require 'model/ContactDAO.php';
 
+    $method=$_SERVER['REQUEST_METHOD'];
+    if($method=='POST'){
+        $username=$_POST['username'];
+        $email=$_POST['email'];
+        $contact = new Contact();
+        $contact->setUsername($username);
+        $contact->setEmail($email);
+        $contactDAO = new ContactDAO();
+        $contactDAO->addContact($contact);
+        header("Location: index.php");
+        exit;
+    }
+
 
 ?>
 <!DOCTYPE html>

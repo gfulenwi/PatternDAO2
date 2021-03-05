@@ -21,6 +21,15 @@
             $connection->close();
         }
 
+        public function deleteContact($contactid){
+            $connection=$this->getConnection();
+            $stmt = $connection->prepare("DELETE FROM contacts WHERE contactID = ?");
+            $stmt->bind_param("i", $contactid);
+            $stmt->execute();
+            $stmt->close();
+            $connection->close();
+        }
+
         public function getContacts(){
             $connection=$this->getConnection();
             $stmt = $connection->prepare("SELECT * FROM contacts;"); 

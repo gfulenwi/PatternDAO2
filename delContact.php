@@ -1,5 +1,21 @@
 <?php
-    require 'model/ContactDAO.php';  
+    require 'model/ContactDAO.php'; 
+
+    if(isset($_GET['contactID'])){
+        $contactid=$_GET['contactID'];
+    }
+    
+    $method=$_SERVER['REQUEST_METHOD'];
+    if($method=='POST'){
+        $contactid=$_POST['contactID'];
+        $submit=$_POST['submit'];
+        if($submit=='CONFIRM'){
+            $contactDAO = new ContactDAO();
+            $contactDAO->deleteContact($contactid);
+        }
+        header("Location: index.php");
+        exit;
+    }
     
 ?>
 <!DOCTYPE html>
@@ -26,7 +42,8 @@
                     <div class="card-body">
                         <h5 class="card-title">Delete Contact</h5>
                         <p class="card-text">Confirm Deletion of Contact from the list.</p>
-                        <form action="addContact.php" method="POST">
+                        <form action="delContact.php" method="POST">
+                            <input type="hidden" name="contactID" value="<?php echo $contactid; ?>">
                             <button class="btn btn-primary" type="submit" name="submit" value="CONFIRM" >Confirm</button> 
                             <button class="btn btn-primary" type="submit" name="submit" value="CANCEL" >Cancel</button>   
                         </form>
